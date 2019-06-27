@@ -40,8 +40,6 @@ declare namespace MapboxGL {
         getVisibleBounds(): Promise<void>;
         queryRenderedFeaturesAtPoint(coordinate: Array<number>, filter?: Array<string>, layerIds?: Array<string>): Promise<void>;
         queryRenderedFeaturesInRect(coordinate: Array<number>, filter?: Array<string>, layerIds?: Array<string>): Promise<void>;
-        fitBounds(northEastCoordinates: Array<number>, southWestCoordinates: Array<number>, padding?: number, duration?: number): void;
-        flyTo(coordinates: Array<number>, duration?: number): void;
         moveTo(coordinates: Array<number>, duration?: number): void;
         zoomTo(zoomLevel: number, duration?: number): void;
         setCamera(config: any): void;
@@ -50,6 +48,16 @@ declare namespace MapboxGL {
         getCenter(): Promise<Array<number>>;
     }
 
+  class Camera extends Component<CameraProps> {
+    fitBounds(
+      northEastCoordinates: Array<number>,
+      southWestCoordinates: Array<number>,
+      padding?: number,
+      duration?: number
+    ): void
+    flyTo(coordinates: Array<number>, duration?: number): void
+  }
+  
     class Light extends Component<LightProps> { }
 
     class StyleSheet extends Component {
@@ -144,7 +152,7 @@ interface MapViewProps extends ViewProperties {
     heading?: number;
     pitch?: number;
     style?: any;
-    styleURL?: MapboxGL.StyleURL;
+    styleURL?: string;
     zoomLevel?: number;
     minZoomLevel?: number;
     maxZoomLevel?: number;
@@ -177,6 +185,11 @@ interface MapViewProps extends ViewProperties {
     onDidFinishRenderingMapFully?: () => void;
     onDidFinishLoadingStyle?: () => void;
     onUserTrackingModeChange?: () => void;
+}
+
+interface CameraProps {
+  animationDuration?: number
+  animationMode?: string
 }
 
 interface LightStyle {
