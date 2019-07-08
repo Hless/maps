@@ -40,23 +40,23 @@ declare namespace MapboxGL {
         getVisibleBounds(): Promise<void>;
         queryRenderedFeaturesAtPoint(coordinate: Array<number>, filter?: Array<string>, layerIds?: Array<string>): Promise<void>;
         queryRenderedFeaturesInRect(coordinate: Array<number>, filter?: Array<string>, layerIds?: Array<string>): Promise<void>;
-        moveTo(coordinates: Array<number>, duration?: number): void;
-        zoomTo(zoomLevel: number, duration?: number): void;
-        setCamera(config: any): void;
         takeSnap(writeToDisk: boolean): Promise<string>;
         getZoom(): Promise<number>;
         getCenter(): Promise<Array<number>>;
+      }
+      
+    class Camera extends Component<CameraProps> {
+        fitBounds(
+          northEastCoordinates: Array<number>,
+          southWestCoordinates: Array<number>,
+          padding?: number,
+          duration?: number
+        ): void
+        flyTo(coordinates: Array<number>, duration?: number): void
+        moveTo(coordinates: Array<number>, duration?: number): void;
+        zoomTo(zoomLevel: number, duration?: number): void;
+        setCamera(config: any): void
     }
-
-  class Camera extends Component<CameraProps> {
-    fitBounds(
-      northEastCoordinates: Array<number>,
-      southWestCoordinates: Array<number>,
-      padding?: number,
-      duration?: number
-    ): void
-    flyTo(coordinates: Array<number>, duration?: number): void
-  }
   
     class Light extends Component<LightProps> { }
 
@@ -149,13 +149,8 @@ interface MapViewProps extends ViewProperties {
     userTrackingMode?: number;
     userLocationVerticalAlignment?: number;
     contentInset?: Array<number>;
-    heading?: number;
-    pitch?: number;
     style?: any;
     styleURL?: string;
-    zoomLevel?: number;
-    minZoomLevel?: number;
-    maxZoomLevel?: number;
     localizeLabels?: boolean;
     zoomEnabled?: boolean;
     scrollEnabled?: boolean;
@@ -188,8 +183,13 @@ interface MapViewProps extends ViewProperties {
 }
 
 interface CameraProps {
-  animationDuration?: number
-  animationMode?: string
+  animationDuration?: number;
+  animationMode?: string;
+  heading?: number;
+  pitch?: number;
+  zoomLevel?: number;
+  minZoomLevel?: number;
+  maxZoomLevel?: number;
 }
 
 interface LightStyle {
